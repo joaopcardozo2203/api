@@ -1,66 +1,280 @@
-const usuariosDiv = document.getElementById("usuarios");
-const detalhesDiv = document.getElementById("detalhes");
-const loading = document.getElementById("loading");
-const erro = document.getElementById("erro");
-const busca = document.getElementById("busca");
+const resultado = document.getElementById("resultado");
+const btnUsuarios = document.getElementById("btnUsuarios");
+const idUser = document.getElementById("idUser");
+const buscaPost = document.getElementById("buscaPost");
+const cep = document.getElementById("cep");
 
-let usuarios = [];
 
-async function carregarUsuarios() {
-  try {
-    loading.style.display = "block";
+// ======================================
+// NÍVEL 1 - QUESTÃO 1
+// Buscar usuários: nome e email
+// ======================================
+/*
+async function buscarUsuarios() {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
+  const usuarios = await resposta.json();
 
-    const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
+  resultado.innerHTML = "";
 
-    if (!resposta.ok) {
-      throw new Error("Erro ao buscar usuários");
-    }
-
-    usuarios = await resposta.json();
-
-    mostrarUsuarios(usuarios);
-
-    loading.style.display = "none";
-  } catch (error) {
-    loading.style.display = "none";
-    erro.textContent = "Erro ao carregar dados";
-    console.error(error);
-  }
-}
-
-function mostrarUsuarios(lista) {
-  usuariosDiv.innerHTML = "";
-
-  lista.forEach(usuario => {
-    const div = document.createElement("div");
-    div.classList.add("usuario");
-
-    div.innerHTML = `
-      <strong>${usuario.name}</strong>
-    `;
-
-    div.addEventListener("click", () => {
-      detalhesDiv.innerHTML = `
-        <h2>${usuario.name}</h2>
-        <p>Email: ${usuario.email}</p>
-        <p>Telefone: ${usuario.phone}</p>
-        <p>Empresa: ${usuario.company.name}</p>
-        <p>Cidade: ${usuario.address.city}</p>
-      `;
-    });
-
-    usuariosDiv.appendChild(div);
+  usuarios.forEach(usuario => {
+    resultado.innerHTML += `<p>${usuario.name} - ${usuario.email}</p>`;
   });
 }
 
-busca.addEventListener("input", () => {
-  const texto = busca.value.toLowerCase();
+buscarUsuarios();
+*/
 
-  const filtrados = usuarios.filter(usuario =>
-    usuario.name.toLowerCase().includes(texto)
+
+// ======================================
+// NÍVEL 1 - QUESTÃO 2
+// Mostrar os 5 primeiros posts
+// ======================================
+/*
+async function buscarPosts() {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const posts = await resposta.json();
+
+  resultado.innerHTML = "";
+
+  posts.slice(0, 5).forEach(post => {
+    resultado.innerHTML += `
+      <h3>${post.title}</h3>
+      <p>${post.body}</p>
+    `;
+  });
+}
+
+buscarPosts();
+*/
+
+
+// ======================================
+// NÍVEL 1 - QUESTÃO 3
+// Botão carregar usuários
+// ======================================
+/*
+btnUsuarios.addEventListener("click", async () => {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
+  const usuarios = await resposta.json();
+
+  resultado.innerHTML = "";
+
+  usuarios.forEach(usuario => {
+    resultado.innerHTML += `<p>${usuario.name}</p>`;
+  });
+});
+*/
+
+
+// ======================================
+// NÍVEL 2 - QUESTÃO 1
+// Buscar usuário por ID
+// ======================================
+/*
+async function buscarPorId() {
+  const resposta = await fetch(
+    `https://jsonplaceholder.typicode.com/users/${idUser.value}`
   );
 
-  mostrarUsuarios(filtrados);
+  const usuario = await resposta.json();
+
+  resultado.innerHTML = `
+    <p>${usuario.name}</p>
+    <p>${usuario.phone}</p>
+  `;
+}
+*/
+
+
+// ======================================
+// NÍVEL 2 - QUESTÃO 2
+// Clique mostra detalhes
+// ======================================
+/*
+async function listaDetalhes() {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
+  const usuarios = await resposta.json();
+
+  resultado.innerHTML = "";
+
+  usuarios.forEach(usuario => {
+    const p = document.createElement("p");
+    p.textContent = usuario.name;
+
+    p.addEventListener("click", () => {
+      resultado.innerHTML += `
+        <p>Email: ${usuario.email}</p>
+        <p>Telefone: ${usuario.phone}</p>
+        <p>Empresa: ${usuario.company.name}</p>
+      `;
+    });
+
+    resultado.appendChild(p);
+  });
+}
+
+listaDetalhes();
+*/
+
+
+// ======================================
+// NÍVEL 2 - QUESTÃO 3
+// Filtrar posts em tempo real
+// ======================================
+/*
+let posts = [];
+
+async function carregarPosts() {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/posts");
+  posts = await resposta.json();
+}
+
+buscaPost.addEventListener("input", () => {
+  const filtrados = posts.filter(post =>
+    post.title.toLowerCase().includes(buscaPost.value.toLowerCase())
+  );
+
+  resultado.innerHTML = "";
+
+  filtrados.forEach(post => {
+    resultado.innerHTML += `<p>${post.title}</p>`;
+  });
 });
 
-carregarUsuarios();
+carregarPosts();
+*/
+
+
+// ======================================
+// NÍVEL 3 - QUESTÃO 1
+// Cards de usuários
+// ======================================
+/*
+async function cardsUsuarios() {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
+  const usuarios = await resposta.json();
+
+  resultado.innerHTML = "";
+
+  usuarios.forEach(usuario => {
+    resultado.innerHTML += `
+      <div>
+        <h3>${usuario.name}</h3>
+        <p>${usuario.email}</p>
+        <p>${usuario.address.city}</p>
+      </div>
+    `;
+  });
+}
+
+cardsUsuarios();
+*/
+
+
+// ======================================
+// NÍVEL 3 - QUESTÃO 2
+// Loading
+// ======================================
+/*
+async function loadingUsuarios() {
+  resultado.innerHTML = "Carregando...";
+
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/users");
+  const usuarios = await resposta.json();
+
+  resultado.innerHTML = "";
+
+  usuarios.forEach(usuario => {
+    resultado.innerHTML += `<p>${usuario.name}</p>`;
+  });
+}
+
+loadingUsuarios();
+*/
+
+
+// ======================================
+// NÍVEL 3 - QUESTÃO 3
+// Try/Catch
+// ======================================
+/*
+async function erroFetch() {
+  try {
+    const resposta = await fetch("https://urlerrada.com/users");
+    await resposta.json();
+  } catch {
+    resultado.innerHTML = "Erro ao carregar dados";
+  }
+}
+
+erroFetch();
+*/
+
+
+// ======================================
+// NÍVEL 4 - QUESTÃO 1
+// Buscar posts pelo texto
+// ======================================
+/*
+buscaPost.addEventListener("input", async () => {
+  const resposta = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const posts = await resposta.json();
+
+  const filtrados = posts.filter(post =>
+    post.body.toLowerCase().includes(buscaPost.value.toLowerCase())
+  );
+
+  resultado.innerHTML = "";
+
+  filtrados.forEach(post => {
+    resultado.innerHTML += `<p>${post.body}</p>`;
+  });
+});
+*/
+
+
+// ======================================
+// NÍVEL 4 - QUESTÃO 2
+// Buscar CEP
+// ======================================
+/*
+async function buscarCep() {
+  const resposta = await fetch(
+    `https://viacep.com.br/ws/${cep.value}/json/`
+  );
+
+  const endereco = await resposta.json();
+
+  resultado.innerHTML = `
+    <p>Rua: ${endereco.logradouro}</p>
+    <p>Bairro: ${endereco.bairro}</p>
+    <p>Cidade: ${endereco.localidade}</p>
+  `;
+}
+*/
+
+
+// ======================================
+// NÍVEL 4 - QUESTÃO 3
+// POST formulário
+// ======================================
+/*
+async function enviarUsuario() {
+  const resposta = await fetch(
+    "https://jsonplaceholder.typicode.com/users",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nome: "João",
+        email: "joao@gmail.com"
+      })
+    }
+  );
+
+  const dados = await resposta.json();
+  console.log(dados);
+}
+*/
